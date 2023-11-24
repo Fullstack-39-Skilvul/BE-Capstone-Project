@@ -1,4 +1,3 @@
-//mongodb+srv://vikiade00:viki123158@mycluster.805cqec.mongodb.net/db_konseling
 require("dotenv").config();
 
 const mongoose = require("mongoose");
