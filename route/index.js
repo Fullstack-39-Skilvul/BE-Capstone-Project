@@ -3,6 +3,7 @@ const route = express.Router();
 const pasienRoute = require("./pasien.route");
 const spesialisasiRoute = require("./spesialisasi.route");
 const konselorRoute = require("./konselor.route");
+const jenisKonselingRoute = require("./jenisKonseling.route");
 
 route.get("/", (req, res) => {
   try {
@@ -16,5 +17,6 @@ route.get("/", (req, res) => {
 route.use("/pasiens", pasienRoute);
 route.use("/konselors", konselorRoute);
 route.use("/spesialisasis", spesialisasiRoute);
+route.use("/jenisKonselings", jenisKonselingRoute);
 
 module.exports = route;
