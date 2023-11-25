@@ -6,10 +6,12 @@ const konselorSchema = new mongoose.Schema({
   password: String,
   noTelepon: String,
   avatar: String,
-  spesialisasi: {
-    type: mongoose.ObjectID,
-    ref: "Spesialisasi",
-  },
+  spesialisasi: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Spesialisasi",
+    },
+  ],
 });
 
 const Konselor = mongoose.model("Konselor", konselorSchema);
