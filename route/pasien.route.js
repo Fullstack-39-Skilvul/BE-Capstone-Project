@@ -1,4 +1,6 @@
 const express = require("express");
+const route = express.Router();
+
 const {
   createPasien,
   getAllPasien,
@@ -6,7 +8,6 @@ const {
   editPasien,
   deletePasien,
 } = require("../controller/pasien.controller");
-const route = express.Router();
 
 route.get("/", getAllPasien);
 route.get("/:id", getPasienById);
