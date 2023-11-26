@@ -7,11 +7,13 @@ const {
   getKonselorById,
   editKonselor,
   deleteKonselor,
+  getJadwalKonselorById,
 } = require("../controller/konselor.controller");
 const route = express.Router();
 
 route.get("/", getAllKonselor);
 route.get("/:id", getKonselorById);
+route.get("/:id/jadwal", getJadwalKonselorById);
 route.post("/", upload.single("avatar"), createKonselor);
 route.put("/:id", upload.single("avatar"), editKonselor);
 route.delete("/:id", deleteKonselor);

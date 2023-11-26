@@ -1,3 +1,4 @@
+const Booking = require("../models/booking");
 const Konselor = require("../models/konselor");
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
@@ -29,6 +30,37 @@ module.exports = {
       }
 
       res.json(konselor);
+    } catch (error) {
+      res.status(500).json({
+        message: "Gagal mendapatkan data konselor" + error,
+      });
+    }
+  },
+
+  getJadwalKonselorById: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const booking = await Booking.find({ konselor: id })
+        .populate({
+          path: "pasien",
+          select: "_id namaPasien email noTelepon",
+        })
+        .populate({
+          path: "konselor",
+          select: "_id nama",
+        })
+        .populate({
+          path: "jenisKonseling",
+          select: "jenis harga platformPertemuan",
+        });
+      if (!booking) {
+        return res.status(404).json({
+          message: "Id not found",
+        });
+      }
+
+      res.json(booking);
     } catch (error) {
       res.status(500).json({
         message: "Gagal mendapatkan data konselor" + error,

@@ -1,3 +1,4 @@
+const Booking = require("../models/booking");
 const Pasien = require("../models/pasien");
 
 module.exports = {
@@ -30,6 +31,37 @@ module.exports = {
     } catch (error) {
       res.status(500).json({
         message: "Gagal mendapatkan data pasien" + error,
+      });
+    }
+  },
+
+  getJadwalPasienById: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const booking = await Booking.find({ pasien: id })
+        .populate({
+          path: "pasien",
+          select: "_id namaPasien",
+        })
+        .populate({
+          path: "konselor",
+          select: "_id nama",
+        })
+        .populate({
+          path: "jenisKonseling",
+          select: "jenis harga platformPertemuan",
+        });
+      if (!booking) {
+        return res.status(404).json({
+          message: "Id not found",
+        });
+      }
+
+      res.json(booking);
+    } catch (error) {
+      res.status(500).json({
+        message: "Gagal mendapatkan data konselor" + error,
       });
     }
   },
