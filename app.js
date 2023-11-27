@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(allRoute);
-app.use(cors);
+app.use(cors());
 
 db.then(() => {
   console.log("Berhasil connect ke mongoose db konseling");
