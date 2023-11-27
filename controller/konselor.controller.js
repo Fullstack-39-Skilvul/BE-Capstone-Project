@@ -19,6 +19,22 @@ module.exports = {
     }
   },
 
+  getDataKonselor: async (req, res) => {
+    try {
+      const konselors = await Konselor.find().select(
+        "avatar nama spesialisasi"
+      );
+      res.json({
+        message: "Berhasil mendapatkan data konselor",
+        data: konselors,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Gagal mendapatkan data konselor" + error, // Menambahkan pesan kesalahan ke dalam respons
+      });
+    }
+  },
+
   getKonselorById: async (req, res) => {
     const { id } = req.params;
 

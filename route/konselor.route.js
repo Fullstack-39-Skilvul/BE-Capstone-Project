@@ -8,11 +8,13 @@ const {
   editKonselor,
   deleteKonselor,
   getJadwalKonselorById,
+  getDataKonselor,
 } = require("../controller/konselor.controller");
 const verifyToken = require("../middleware/verifyToken.middleware");
 const route = express.Router();
 
 route.get("/", verifyToken(["admin"]), getAllKonselor);
+route.get("/data-konselor", getDataKonselor);
 route.get("/:id", verifyToken(["admin"]), getKonselorById);
 route.get(
   "/:id/jadwal",
