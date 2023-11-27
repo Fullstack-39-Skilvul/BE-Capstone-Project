@@ -6,12 +6,13 @@ const {
   createJenisKonseling,
   editJenisKonseling,
 } = require("../controller/jenisKonseling.controller");
+const verifyToken = require("../middleware/verifyToken.middleware");
 const route = express.Router();
 
-route.get("/", getAllJenisKonseling);
-route.get("/:id", getJenisKonselingById);
-route.post("/", createJenisKonseling);
-route.put("/:id", editJenisKonseling);
-route.delete("/:id", deleteJenisKonseling);
+route.get("/", verifyToken(["admin"]), getAllJenisKonseling);
+route.get("/:id", verifyToken(["admin"]), getJenisKonselingById);
+route.post("/", verifyToken(["admin"]), createJenisKonseling);
+route.put("/:id", verifyToken(["admin"]), editJenisKonseling);
+route.delete("/:id", verifyToken(["admin"]), deleteJenisKonseling);
 
 module.exports = route;

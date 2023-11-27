@@ -1,4 +1,5 @@
 const Admin = require("../models/admin");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   getAllAdmin: async (req, res) => {
@@ -35,16 +36,31 @@ module.exports = {
   },
 
   createAdmin: async (req, res) => {
-    let data = req.body;
+    const { nama, email, password } = req.body;
 
     try {
-      await Admin.create(data);
+      // Cek apakah email sudah terdaftar
+      const existingAdmin = await Admin.findOne({ email });
+      if (existingAdmin) {
+        throw new Error("Email is already registered");
+      }
+
+      // Hash password sebelum menyimpannya di database
+      const hashedPassword = await bcrypt.hash(password, 10); // 10 adalah cost factor
+
+      // Simpan data admin ke dalam database
+      await Admin.create({
+        nama,
+        email,
+        password: hashedPassword,
+      });
+
       res.json({
         message: "Berhasil membuat data admin",
       });
     } catch (error) {
       res.status(500).json({
-        message: "Gagal membuat data admin" + error,
+        message: "Gagal membuat data admin: " + error.message,
       });
     }
   },

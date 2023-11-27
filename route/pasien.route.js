@@ -9,12 +9,13 @@ const {
   deletePasien,
   getJadwalPasienById,
 } = require("../controller/pasien.controller");
+const verifyToken = require("../middleware/verifyToken.middleware");
 
-route.get("/", getAllPasien);
-route.get("/:id", getPasienById);
-route.get("/:id/jadwal", getJadwalPasienById);
+route.get("/", verifyToken(["admin"]), getAllPasien);
+route.get("/:id", verifyToken(["admin"]), getPasienById);
+route.get("/:id/jadwal", verifyToken(["admin", "pasien"]), getJadwalPasienById);
 route.post("/", createPasien);
-route.put("/:id", editPasien);
-route.delete("/:id", deletePasien);
+route.put("/:id", verifyToken(["admin"]), editPasien);
+route.delete("/:id", verifyToken(["admin"]), deletePasien);
 
 module.exports = route;

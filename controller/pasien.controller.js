@@ -1,13 +1,14 @@
 const Booking = require("../models/booking");
 const Pasien = require("../models/pasien");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   getAllPasien: async (req, res) => {
     try {
-      const pasiens = await Pasien.find();
+      const pasien = await Pasien.find();
       res.json({
         message: "Berhasil mendapatkan data pasien",
-        data: pasiens,
+        data: pasien,
       });
     } catch (error) {
       res.status(500).json({
@@ -67,16 +68,33 @@ module.exports = {
   },
 
   createPasien: async (req, res) => {
-    let data = req.body;
+    const { namaPasien, email, password, alamat, noTelepon } = req.body;
 
     try {
-      await Pasien.create(data);
+      // Cek apakah email sudah terdaftar
+      const existingPasien = await Pasien.findOne({ email });
+      if (existingPasien) {
+        throw new Error("Email is already registered");
+      }
+
+      // Hash password sebelum menyimpannya di database
+      const hashedPassword = await bcrypt.hash(password, 10); // 10 adalah cost factor
+
+      // Simpan data pasien ke dalam database
+      await Pasien.create({
+        namaPasien,
+        email,
+        password: hashedPassword,
+        alamat,
+        noTelepon,
+      });
+
       res.json({
         message: "Berhasil membuat data pasien",
       });
     } catch (error) {
       res.status(500).json({
-        message: "Gagal membuat data pasien" + error,
+        message: "Gagal membuat data pasien: " + error.message,
       });
     }
   },
