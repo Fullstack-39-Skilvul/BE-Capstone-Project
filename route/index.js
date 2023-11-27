@@ -7,6 +7,8 @@ const konselorRoute = require("./konselor.route");
 const jenisKonselingRoute = require("./jenisKonseling.route");
 const bookingRoute = require("./booking.route");
 const paymentRoute = require("./payment.route");
+const adminRoute = require("./admin.route");
+const authRoute = require("./auth.route");
 
 route.get("/", (req, res) => {
   try {
@@ -23,5 +25,7 @@ route.use("/spesialisasis", spesialisasiRoute);
 route.use("/jenisKonselings", jenisKonselingRoute);
 route.use("/bookings", bookingRoute);
 route.use("/payments", paymentRoute);
+route.use("/admins", adminRoute);
+route.use("/auth", authRoute);
 
 module.exports = route;

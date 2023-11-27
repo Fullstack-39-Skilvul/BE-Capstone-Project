@@ -6,12 +6,13 @@ const {
   editSpesialisasi,
   deleteSpesialisasi,
 } = require("../controller/spesialisasi.controller");
+const verifyToken = require("../middleware/verifyToken.middleware");
 const route = express.Router();
 
-route.get("/", getAllSpesialisasi);
-route.get("/:id", getSpesialisasiById);
-route.post("/", createSpesialisasi);
-route.put("/:id", editSpesialisasi);
-route.delete("/:id", deleteSpesialisasi);
+route.get("/", verifyToken(["admin"]), getAllSpesialisasi);
+route.get("/:id", verifyToken(["admin"]), getSpesialisasiById);
+route.post("/", verifyToken(["admin"]), createSpesialisasi);
+route.put("/:id", verifyToken(["admin"]), editSpesialisasi);
+route.delete("/:id", verifyToken(["admin"]), deleteSpesialisasi);
 
 module.exports = route;

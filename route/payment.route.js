@@ -5,12 +5,14 @@ const {
   createPayment,
   updatePayment,
   deletePayment,
+  getPaymentById,
 } = require("../controller/payment.controller");
+const verifyToken = require("../middleware/verifyToken.middleware");
 
-route.get("/", getAllPayment);
-route.get("/:id");
-route.post("/", createPayment);
-route.put("/:id", updatePayment);
-route.delete("/:id", deletePayment);
+route.get("/", verifyToken(["admin"]), getAllPayment);
+route.get("/:id", verifyToken(["admin"]), getPaymentById);
+route.post("/", verifyToken(["admin", "pasien"]), createPayment);
+route.put("/:id", verifyToken(["admin"]), updatePayment);
+route.delete("/:id", verifyToken(["admin"]), deletePayment);
 
 module.exports = route;

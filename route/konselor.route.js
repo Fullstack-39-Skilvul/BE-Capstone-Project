@@ -9,13 +9,28 @@ const {
   deleteKonselor,
   getJadwalKonselorById,
 } = require("../controller/konselor.controller");
+const verifyToken = require("../middleware/verifyToken.middleware");
 const route = express.Router();
 
-route.get("/", getAllKonselor);
-route.get("/:id", getKonselorById);
-route.get("/:id/jadwal", getJadwalKonselorById);
-route.post("/", upload.single("avatar"), createKonselor);
-route.put("/:id", upload.single("avatar"), editKonselor);
-route.delete("/:id", deleteKonselor);
+route.get("/", verifyToken(["admin"]), getAllKonselor);
+route.get("/:id", verifyToken(["admin"]), getKonselorById);
+route.get(
+  "/:id/jadwal",
+  verifyToken(["admin", "konselor"]),
+  getJadwalKonselorById
+);
+route.post(
+  "/",
+  upload.single("avatar"),
+  verifyToken(["admin"]),
+  createKonselor
+);
+route.put(
+  "/:id",
+  upload.single("avatar"),
+  verifyToken(["admin", "konselor"]),
+  editKonselor
+);
+route.delete("/:id", verifyToken(["admin"]), deleteKonselor);
 
 module.exports = route;

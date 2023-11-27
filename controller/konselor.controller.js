@@ -2,6 +2,7 @@ const Booking = require("../models/booking");
 const Konselor = require("../models/konselor");
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   getAllKonselor: async (req, res) => {
@@ -70,13 +71,26 @@ module.exports = {
 
   createKonselor: async (req, res) => {
     try {
-      // Upload image to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path);
+      // Upload image to cloudinary, if a file is provided
+      let avatarUrl = ""; // Default avatar URL
+
+      if (req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        avatarUrl = result.secure_url;
+      } else {
+        // If no file is provided, use the default avatar URL
+        avatarUrl = "https://i.stack.imgur.com/l60Hf.png"; // Ganti dengan URL gambar default yang sesuai
+      }
+
+      // Hash password sebelum menyimpannya di database
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
       const konselorData = {
         ...req.body,
-        avatar: result.secure_url, // Assuming you have a field named 'imageUrl' in your Konselor model
+        password: hashedPassword,
+        avatar: avatarUrl,
       };
+
       const createdKonselor = await Konselor.create(konselorData);
 
       res.json({
@@ -85,7 +99,7 @@ module.exports = {
       });
     } catch (error) {
       res.status(500).json({
-        message: "Gagal membuat data konselor" + error,
+        message: "Gagal membuat data konselor: " + error.message,
       });
     }
   },

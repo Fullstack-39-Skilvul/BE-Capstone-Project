@@ -6,6 +6,7 @@ const pasienSchema = new mongoose.Schema({
   password: String,
   alamat: String,
   noTelepon: String,
+  role: { type: String, default: "pasien" },
 });
 
 const Pasien = mongoose.model("Pasien", pasienSchema);
