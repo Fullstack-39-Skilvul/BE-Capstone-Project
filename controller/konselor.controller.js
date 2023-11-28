@@ -21,9 +21,9 @@ module.exports = {
 
   getDataKonselor: async (req, res) => {
     try {
-      const konselors = await Konselor.find().select(
-        "avatar nama spesialisasi"
-      );
+      const konselors = await Konselor.find()
+        .select("avatar nama spesialisasi")
+        .populate("spesialisasi");
       res.json({
         message: "Berhasil mendapatkan data konselor",
         data: konselors,
