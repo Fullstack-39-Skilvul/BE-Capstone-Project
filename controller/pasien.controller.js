@@ -115,7 +115,7 @@ module.exports = {
 
       res.json({
         message: "Berhasil mengedit data pasien",
-        data: updatedPasien,
+        // data: updatedPasien,
       });
     } catch (error) {
       res.status(500).json({
