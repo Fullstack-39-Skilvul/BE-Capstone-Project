@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const konselorSchema = new mongoose.Schema({
   nama: String,
   email: String,
-  password: String,
+  password: {
+    type: String,
+    default: "konselor123",
+  },
   noTelepon: String,
   avatar: {
     type: String,
