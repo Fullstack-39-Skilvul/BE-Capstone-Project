@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 
 const konselorSchema = new mongoose.Schema({
   nama: String,
+  bio: {
+    type: String,
+    default: "Biodata Konselor",
+  },
+  motivasi: {
+    type: String,
+    default: "Motivasi Konselor",
+  },
   email: String,
   password: String,
   noTelepon: String,
