@@ -6,11 +6,11 @@ module.exports = {
       const bookings = await Booking.find()
         .populate({
           path: "pasien",
-          select: "_id namaPasien",
+          select: "_id namaPasien noTelepon",
         })
         .populate({
           path: "konselor",
-          select: "_id nama",
+          select: "_id nama avatar spesialisasi",
         })
         .populate({
           path: "jenisKonseling",
@@ -39,7 +39,7 @@ module.exports = {
         })
         .populate({
           path: "konselor",
-          select: "_id nama",
+          select: "_id nama avatar spesialisasi",
         })
         .populate({
           path: "jenisKonseling",
@@ -66,6 +66,7 @@ module.exports = {
       await Booking.create(data);
       res.json({
         message: "Berhasil membuat data booking",
+        data: data,
       });
     } catch (error) {
       res.status(500).json({
