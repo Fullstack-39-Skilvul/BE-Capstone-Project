@@ -63,10 +63,11 @@ module.exports = {
     let data = req.body;
 
     try {
-      await Booking.create(data);
+      const createdBooking = await Booking.create(data);
+
       res.json({
         message: "Berhasil membuat data booking",
-        data: data,
+        id: createdBooking._id,
       });
     } catch (error) {
       res.status(500).json({
