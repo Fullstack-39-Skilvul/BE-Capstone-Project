@@ -12,7 +12,7 @@ const verifyToken = require("../middleware/verifyToken.middleware");
 route.get("/", verifyToken(["admin"]), getAllPayment);
 route.get("/:id", verifyToken(["admin"]), getPaymentById);
 route.post("/", verifyToken(["admin", "pasien"]), createPayment);
-route.put("/:id", updatePayment);
+route.put("/:id", verifyToken(["admin", "konselor"]), updatePayment);
 route.delete("/:id", verifyToken(["admin"]), deletePayment);
 
 module.exports = route;
