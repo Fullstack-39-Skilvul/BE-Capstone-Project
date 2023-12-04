@@ -65,11 +65,7 @@ module.exports = {
         })
         .populate({
           path: "konselor",
-          select: "_id nama email noTelepon avatar",
-        })
-        .populate({
-          path: "spesialisasi",
-          select: "_id namaSpesialisasi",
+          select: "_id nama avatar",
         })
         .populate({
           path: "jenisKonseling",
