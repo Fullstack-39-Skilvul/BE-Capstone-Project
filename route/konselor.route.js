@@ -29,8 +29,8 @@ route.post(
 );
 route.put(
   "/:id",
-  upload.single("avatar"),
   verifyToken(["admin", "konselor"]),
+  upload.single("avatar"),
   editKonselor
 );
 route.delete("/:id", verifyToken(["admin"]), deleteKonselor);
