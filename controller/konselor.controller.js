@@ -132,6 +132,12 @@ module.exports = {
         newData.avatar = result.secure_url;
       }
 
+      // Hash password baru sebelum menyimpannya di database
+      if (newData.password) {
+        const hashedPassword = await bcrypt.hash(newData.password, 10);
+        newData.password = hashedPassword;
+      }
+
       // Update the konselor data
       const updatedKonselor = await Konselor.findByIdAndUpdate(id, newData, {
         new: true,
