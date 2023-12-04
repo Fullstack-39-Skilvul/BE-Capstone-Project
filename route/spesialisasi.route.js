@@ -9,8 +9,8 @@ const {
 const verifyToken = require("../middleware/verifyToken.middleware");
 const route = express.Router();
 
-route.get("/", verifyToken(["admin"]), getAllSpesialisasi);
-route.get("/:id", verifyToken(["admin"]), getSpesialisasiById);
+route.get("/", verifyToken(["admin", "konselor"]), getAllSpesialisasi);
+route.get("/:id", verifyToken(["admin", "konselor"]), getSpesialisasiById);
 route.post("/", verifyToken(["admin"]), createSpesialisasi);
 route.put("/:id", verifyToken(["admin"]), editSpesialisasi);
 route.delete("/:id", verifyToken(["admin"]), deleteSpesialisasi);
