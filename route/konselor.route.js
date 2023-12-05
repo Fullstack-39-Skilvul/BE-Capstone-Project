@@ -15,7 +15,11 @@ const route = express.Router();
 
 route.get("/", verifyToken(["admin"]), getAllKonselor);
 route.get("/data-konselor", getDataKonselor);
-route.get("/:id", verifyToken(["admin", "konselor"]), getKonselorById);
+route.get(
+  "/:id",
+  verifyToken(["admin", "konselor", "pasien"]),
+  getKonselorById
+);
 route.get(
   "/:id/jadwal",
   verifyToken(["admin", "konselor"]),
