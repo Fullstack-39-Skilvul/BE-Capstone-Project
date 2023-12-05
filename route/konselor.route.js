@@ -13,7 +13,7 @@ const {
 const verifyToken = require("../middleware/verifyToken.middleware");
 const route = express.Router();
 
-route.get("/", verifyToken(["admin"]), getAllKonselor);
+route.get("/", verifyToken(["admin", "pasien"]), getAllKonselor);
 route.get("/data-konselor", getDataKonselor);
 route.get(
   "/:id",
